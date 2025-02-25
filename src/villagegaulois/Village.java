@@ -36,6 +36,7 @@ public class Village {
 			for(int i=0;i<etal.length;i++) {
 				if (etal[i].contientProduit(produit)) {
 					etalAvecProduit[indiceEtalAvecProduit] = etal[i];
+					indiceEtalAvecProduit+=1;
 				}
 			}
 			return etalAvecProduit;
@@ -116,11 +117,37 @@ public class Village {
 	}
 	public String installerVendeur(Gaulois vendeur, String produit,int nbProduit) {
 		StringBuilder chaine = new StringBuilder();
-		chaine.append(vendeur+" cherche un endroit pour vendre "+nbProduit+ produit+".\n");
+		chaine.append("Le vendeur " +vendeur.getNom()+" cherche un endroit pour vendre "+nbProduit+ " " +produit+".\n");
 		int indiceEtal = marche.trouverEtalLibre();
 		if(indiceEtal==-1) {
-			
+			chaine.append("Le vendeur n'a pas trouve d'etal.\n");
+		}else{
+			marche.utiliserEtal(indiceEtal,vendeur,produit,nbProduit);
+			chaine.append("Le vendeur "+ vendeur.getNom() + " vend des "+produit+" a l'etal numero "+ indiceEtal +"\n");
 		}
 		return chaine.toString();
 	}
+	
+	public String rechercherVendeursProduit(String produit){
+		StringBuilder chaine = new StringBuilder();
+		Etal[] etalProduit = marche.trouverEtals(produit);
+		if(etalProduit[0]==null) {
+			chaine.append("Il n'y a pas de vendeur qui vend des "+produit+" au marche\n");
+			return chaine.toString();		
+		}else if (etalProduit[1]==null) {
+			Gaulois nomVendeur = etalProduit[0].getVendeur();
+			chaine.append("Seul le vendeur "+nomVendeur.getNom()+" propose des "+produit+" au marche\n");
+			return chaine.toString();
+		}else{
+			chaine.append("Les vendeurs qui proposent des "+produit+" sont :\n");
+			int indice=0;
+			while(etalProduit[indice]!=null) {
+				Gaulois nomDesVendeurs = etalProduit[indice].getVendeur();
+				chaine.append("- " +nomDesVendeurs.getNom()+" \n");
+				indice+=1;
+			}
+			return chaine.toString();
+		}
+	}
+	
 }
