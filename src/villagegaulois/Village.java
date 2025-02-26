@@ -49,18 +49,20 @@ public class Village {
 			}
 			return null;
 		}
-		public void afficherMarche() {
+		public String afficherMarche() {
 			int nombreEtalVide=0;
+			StringBuilder chaine = new StringBuilder();
 			for(int i=0;i<etal.length;i++) {
 				if (etal[i].afficherEtal().equals("L'étal est libre")) {
 					nombreEtalVide+=1;
 				}else {
-					System.out.println(etal[i].afficherEtal()+"\n");
+					chaine.append(etal[i].afficherEtal()+"\n");
 				}
 			}
 			if(nombreEtalVide!=0) {
-				System.out.println("Il reste "+nombreEtalVide +" etals non utilises dans le marche.\n");
+				chaine.append("Il reste "+nombreEtalVide +" etals non utilises dans le marche.\n");
 			}
+			return chaine.toString();
 		}
 	}
 	
@@ -150,4 +152,25 @@ public class Village {
 		}
 	}
 	
+	public Etal rechercherEtal(Gaulois vendeur) {
+		Etal etalVendeur = marche.trouverVendeur(vendeur);
+		return etalVendeur;
+	}
+	
+	public String partirVendeur(Gaulois vendeur) {
+		StringBuilder chaine = new StringBuilder();
+		Etal etalALiberer = new Etal();
+		etalALiberer = marche.trouverVendeur(vendeur);
+		chaine.append(etalALiberer.libererEtal());
+		return chaine.toString();
+	}
+	
+	public String afficherMarche() {
+		StringBuilder chaine = new StringBuilder();
+		chaine.append("Le marche du village \"le village des irreductibles\" possede plusieurs etals :\n");
+		chaine.append(marche.afficherMarche());
+		return chaine.toString();
+	}
+	
+
 }
