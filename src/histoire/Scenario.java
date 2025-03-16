@@ -40,6 +40,21 @@ public class Scenario {
 		System.out.println(etalFleur.acheterProduit(15, assurancetourix));
 		System.out.println(village.partirVendeur(bonemine));
 		System.out.println(village.afficherMarche());
+		
+		Etal etal = new Etal();
+		try {
+			etalFleur.acheterProduit(-3, abraracourcix);
+		}catch(IllegalArgumentException e){
+			System.out.println("La quantite a acheter est negative\n");
+		}	
+
+		
+		try {
+			etal.acheterProduit(2, abraracourcix);
+		}catch(IllegalArgumentException e){
+			System.out.println("L'etal est null\n");
+		}
+
 	}
 
 }
